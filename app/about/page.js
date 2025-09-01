@@ -9,10 +9,9 @@ import StatisticsCarousel from "@/components/StatisticsCarousel";
 import TeamCarousel from "@/components/TeamCarousel";
 import Testimonials from "@/components/Testimonials";
 import VideoButton from "@/components/VideoButton";
-import VideoCard from "@/components/VideoCard";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import  { React, useState } from "react";
 import { FaLinkedin } from "react-icons/fa";
 import { IoMdPlay } from "react-icons/io";
 

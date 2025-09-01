@@ -1,10 +1,10 @@
-"use client"
+"use client";
 import Buttons from '@/components/Buttons';
 import ContactForm from '@/components/ContactForm';
 import { ArrowDownRight, ArrowUpRight, Contact } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useRef, useState } from 'react'
+import  {React, useRef, useState } from 'react'
 import { FaBehance, FaGithub, FaInstagram, FaLinkedin, FaMapMarkerAlt, FaPlay } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import { IoMdPlay } from 'react-icons/io'
