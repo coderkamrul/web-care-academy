@@ -7,7 +7,7 @@ import ProjectCard from "@/components/ProjectCard";
 import { IoMdPlay } from "react-icons/io";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import {React, useState } from "react";
 import Marquee from "@/components/Marquee";
 import BlogCarousel from "@/components/BlogCarousel";
 import VideoModal from "@/components/Modal";
