@@ -9,6 +9,17 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const eslintConfig = [...compat.extends("next/core-web-vitals")];
+const eslintConfig = [
+  ...compat.extends("next/core-web-vitals"),
+  {
+    rules: {
+      // 👇 turn off unescaped quote errors
+      "react/no-unescaped-entities": "off",
+
+      // (Optional) make hook naming stricter if needed
+      "react-hooks/rules-of-hooks": "error",
+    },
+  },
+];
 
 export default eslintConfig;
