@@ -75,7 +75,7 @@ export default function ProjectCard({ title, category, year, video, image, tags,
                           src={image}
                           alt="Project Image"
                           loading="lazy"
-                          layout="fill"
+                          fill
                         />
                       )}
                     </div>

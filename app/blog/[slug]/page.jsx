@@ -6,32 +6,33 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 
 export default function page({ params }) {
-    const { slug } = params;
     const [blog, setBlog] = useState(null);
-const [loading, setLoading] = useState(true);
-const [error, setError] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+    const unwrappedParams = React.use(params);
+    const { slug } = unwrappedParams;
 
 
-useEffect(() => {
-const fetchBlog = async () => {
-try {
-const res = await axios.get(`/api/blogs/${slug}`);
-setBlog(res.data);
-} catch (err) {
-setError("Blog not found");
-console.error(err);
-} finally {
-setLoading(false);
-}
-};
+    useEffect(() => {
+        const fetchBlog = async () => {
+            try {
+                const res = await axios.get(`/api/blogs/${slug}`);
+                setBlog(res.data);
+            } catch (err) {
+                setError("Blog not found");
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
 
 
-if (slug) fetchBlog();
-}, [slug]);
+        if (slug) fetchBlog();
+    }, [slug]);
 
 
-if (loading) return <BlogHeroSkeleton />;
-if (error) return <BlogHeroSkeleton error="Blog not found" slug={slug}/>;
+    if (loading) return <BlogHeroSkeleton />;
+    if (error) return <BlogHeroSkeleton error="Blog not found" slug={slug} />;
     return (
         <>
             <div className='w-full pt-20 pb-10 | lg:pt-32 lg:pb-16 | xl:pt-40 md:mb-10'>
@@ -71,7 +72,7 @@ if (error) return <BlogHeroSkeleton error="Blog not found" slug={slug}/>;
                                 <Link href="/about" className="flex items-end space-x-3 | lg:space-x-5">
                                     <div className="w-16 h-16 rounded-lg | lg:rounded-xl inline-flex overflow-hidden relative">
                                         <div className="relative overflow-hidden w-full">
-                                            <Image src={blog.user} alt='profile' layout='fill' className="w-full" />
+                                            <Image src={blog.user} alt='profile' fill className="w-full h-full object-cover" />
                                         </div>
                                     </div>
                                     <div className="leading-tight tracking-tight">
@@ -110,7 +111,7 @@ if (error) return <BlogHeroSkeleton error="Blog not found" slug={slug}/>;
                                     </svg>
 
                                 </div>
-                                <Image src="/images/blog-hero.png" alt='blog-hero' layout='fill' className="w-full object-cover object-center h-full absolute top-0 left-0" />
+                                <Image src="/images/blog-hero.png" alt='blog-hero' fill className="w-full object-cover object-center h-full absolute top-0 left-0" />
                             </div>
                         </div>
                     </div>

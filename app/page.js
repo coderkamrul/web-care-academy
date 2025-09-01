@@ -71,6 +71,7 @@ export default function Home() {
                       alt="Video CTA"
                       width={56}
                       height={56}
+                      loading="lazy"
                       className="w-14 h-14 object-cover"
                     />
                   </div>
@@ -404,6 +405,7 @@ export default function Home() {
                           alt="CTA Image"
                           width={200}
                           height={200}
+                          loading="lazy"
                           className="w-full h-auto"
                         />
                       </div>
@@ -459,6 +461,7 @@ export default function Home() {
                           alt="CTA Image"
                           width={200}
                           height={200}
+                          loading="lazy"
                           className="w-full h-auto"
                         />
                       </div>
@@ -522,6 +525,7 @@ export default function Home() {
                           alt="Video CTA"
                           width={56}
                           height={56}
+                          loading="lazy"
                           className="w-14 h-14 object-cover"
                         />
                       </div>
@@ -574,7 +578,8 @@ export default function Home() {
                   <div className="w-full h-full absolute top-0 left-0 rounded-2xl transform-gpu bg-gray-50 overflow-hidden | dark:bg-gray-400 | lg:rounded-3xl ">
                     <Image
                       src="/images/love.png"
-                      layout="fill"
+                      fill
+                      loading="lazy"
                       className="w-full h-full absolute top-0 left-0 object-cover object-center aspect-16/9"
                       alt="love"
                     />
@@ -626,7 +631,8 @@ export default function Home() {
                             <Image
                               src="/images/client.png"
                               className="w-full absolute top-0 left-0 h-full "
-                              layout="fill"
+                              fill
+                              loading="lazy"
                               alt="client"
                             />
                           </div>
