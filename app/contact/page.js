@@ -4,7 +4,7 @@ import ContactForm from '@/components/ContactForm';
 import { ArrowDownRight, ArrowUpRight, Contact } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import  {React, useRef, useState } from 'react'
+import  React, {useRef, useState } from 'react'
 import { FaBehance, FaGithub, FaInstagram, FaLinkedin, FaMapMarkerAlt, FaPlay } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import { IoMdPlay } from 'react-icons/io'
@@ -44,7 +44,7 @@ const faqData = [
   },
 ];
 
-export default function page() {
+export default function Page() {
   const videoRef = useRef(null);
   const [clicked, setClicked] = useState(false);
   const [playing, setPlaying] = useState(false);

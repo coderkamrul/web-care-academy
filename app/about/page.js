@@ -11,7 +11,7 @@ import Testimonials from "@/components/Testimonials";
 import VideoButton from "@/components/VideoButton";
 import Image from "next/image";
 import Link from "next/link";
-import  { React, useState } from "react";
+import  React, {useState } from "react";
 import { FaLinkedin } from "react-icons/fa";
 import { IoMdPlay } from "react-icons/io";
 
@@ -23,7 +23,7 @@ const images = [
   "/images/Award-2.svg",
 ];
 
-export default function page() {
+export default function Page() {
   const [modalVideoUrl, setModalVideoUrl] = useState(null);
   return (
     <>
