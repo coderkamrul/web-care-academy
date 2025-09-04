@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React from 'react'
-import { FaEnvelope, FaLinkedin, FaMapMarkerAlt } from "react-icons/fa";
+import { FaEnvelope, FaLinkedin, FaGithub, FaInstagram, FaBehance, FaMapMarkerAlt } from "react-icons/fa";
+import { FaXTwitter } from 'react-icons/fa6';
 import Buttons from './Buttons';
 import Image from 'next/image';
 import { FaPhone } from "react-icons/fa6";
@@ -33,19 +34,25 @@ export default function Footer() {
                 href="/linkedin"
                 className="inline-flex items-center justify-center bg-[#d0ff71] text-black translate-z-0 rounded-full w-8 h-8 duration-400 | xl:hover:bg-black xl:hover:text-white | lg:dark:hover:bg-bg-[#1a1b1e]"
               >
-                <FaLinkedin />
+                <FaXTwitter />
               </Link>
               <Link
                 href="/linkedin"
                 className="inline-flex items-center justify-center bg-[#d0ff71] text-black translate-z-0 rounded-full w-8 h-8 duration-400 | xl:hover:bg-black xl:hover:text-white | lg:dark:hover:bg-bg-[#1a1b1e]"
               >
-                <FaLinkedin />
+                <FaGithub />
               </Link>
               <Link
                 href="/linkedin"
                 className="inline-flex items-center justify-center bg-[#d0ff71] text-black translate-z-0 rounded-full w-8 h-8 duration-400 | xl:hover:bg-black xl:hover:text-white | lg:dark:hover:bg-bg-[#1a1b1e]"
               >
-                <FaLinkedin />
+                <FaInstagram />
+              </Link>
+              <Link
+                href="/linkedin"
+                className="inline-flex items-center justify-center bg-[#d0ff71] text-black translate-z-0 rounded-full w-8 h-8 duration-400 | xl:hover:bg-black xl:hover:text-white | lg:dark:hover:bg-bg-[#1a1b1e]"
+              >
+                <FaBehance />
               </Link>
             </div>
           </div>

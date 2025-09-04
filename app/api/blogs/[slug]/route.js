@@ -3,7 +3,7 @@ import blogPosts from "@/lib/blogs"; // or relative path
 
 
 export async function GET(req, { params }) {
-const { slug } = params;
+const { slug } = await params;
 const blog = blogPosts.find((b) => b.slug === slug);
 
 
