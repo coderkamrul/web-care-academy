@@ -10,15 +10,19 @@ import React, { useEffect, useState } from 'react'
 
 export default function page() {
     const [blogPosts, setBlogs] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState('Explore all');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
-
     useEffect(() => {
-        const fetchBlogs = async () => {
+        const fetchData = async () => {
             try {
-                const res = await axios.get("/api/blogs");
-                setBlogs(res.data);
+                const blogRes = await axios.get("/api/blogs");
+                setBlogs(blogRes.data);
+                // Extract unique categories from blogs data
+                const uniqueCategories = Array.from(new Set(blogRes.data.map(blog => blog.category))).filter(Boolean);
+                setCategories(uniqueCategories);
             } catch (err) {
                 setError("Failed to load blogs");
                 console.error(err);
@@ -26,8 +30,20 @@ export default function page() {
                 setLoading(false);
             }
         };
-        fetchBlogs();
+        fetchData();
     }, []);
+
+    // Filtered blog posts by selected category
+    const filteredBlogs = selectedCategory === 'Explore all'
+        ? blogPosts
+        : blogPosts.filter(blog => blog.category === selectedCategory);
+
+    // Count blogs per category
+    const categoryCounts = categories.reduce((acc, cat) => {
+        acc[cat] = blogPosts.filter(blog => blog.category === cat).length;
+        return acc;
+    }, {});
+    const exploreAllCount = blogPosts.length;
 
 
     if (error) return <p className="text-red-600">{error}</p>;
@@ -44,60 +60,38 @@ export default function page() {
                                 </div>
                             </h1>
                             <ul className='flex-wrap flex'>
-                                <li className='mr-4 | lg:mr-10'>
-                                    <Link href="/work" className='inline-flex items-end group duration-200'>
-                                        <div className='text-xl | md:text-[4vw] | xl:text-[2.5vw] font-medium tracking-tight text-black  | dark:text-gray-100 leading-tighter text-balance lg:indent-32 | xl:indent-48 lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white'>
+                                {/* Explore all category, separated and indented */}
+                                <li className={`mr-4 | lg:mr-10`}>
+                                    <button
+                                        className={`inline-flex items-end group duration-200 focus:outline-none cursor-pointer`}
+                                        onClick={() => setSelectedCategory('Explore all')}
+                                    >
+                                        <div className={`text-xl | md:text-[4vw] | xl:text-[2.5vw] font-medium tracking-tight ${selectedCategory === 'Explore all' ? 'text-black dark:text-gray-100' : 'text-gray-400 dark:text-gray-600'} leading-tighter text-balance lg:indent-32 | xl:indent-48 lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white`}>
                                             Explore all
                                         </div>
-                                        <div className="text-sm ml-1 transition mb-0.5 | lg:mb-2 text-black | dark:text-gray-200">49</div>
-                                    </Link>
+                                        <div className={`text-sm ml-1 transition mb-0.5 | lg:mb-2 ${selectedCategory === 'Explore all' ? 'text-black dark:text-gray-200' : 'text-gray-400 dark:text-gray-200'}`}>{exploreAllCount}</div>
+                                    </button>
                                 </li>
-                                <li className='mr-4 | lg:mr-10'>
-                                    <Link href="/work" className='inline-flex items-end group duration-200'>
-                                        <div className='text-xl | md:text-[4vw] | xl:text-[2.5vw] font-medium tracking-tight text-gray-400  | dark:text-gray-600 leading-tighter text-balance  lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white'>
-                                            Web Development
-                                        </div>
-                                        <div className="text-xs lg:text-sm ml-1 transition mb-0.5 | lg:mb-2 text-gray-400  | dark:text-gray-200">116</div>
-                                    </Link>
-                                </li>
-                                <li className='mr-4 | lg:mr-10'>
-                                    <Link href="/work" className='inline-flex items-end group duration-200'>
-                                        <div className='text-xl | md:text-[4vw] | xl:text-[2.5vw] font-medium tracking-tight text-gray-400  | dark:text-gray-600 leading-tighter text-balance  lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white'>
-                                            Web Design
-                                        </div>
-                                        <div className="text-xs lg:text-sm ml-1 transition mb-0.5 | lg:mb-2 text-gray-400  | dark:text-gray-200">128</div>
-                                    </Link>
-                                </li>
-                                <li className='mr-4 | lg:mr-10'>
-                                    <Link href="/work" className='inline-flex items-end group duration-200'>
-                                        <div className='text-xl | md:text-[4vw] | xl:text-[2.5vw] font-medium tracking-tight text-gray-400  | dark:text-gray-600 leading-tighter text-balance  lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white'>
-                                            Branding
-                                        </div>
-                                        <div className="text-xs lg:text-sm ml-1 transition mb-0.5 | lg:mb-2 text-gray-400  | dark:text-gray-200">36</div>
-                                    </Link>
-                                </li>
-                                <li className='mr-4 | lg:mr-10'>
-                                    <Link href="/work" className='inline-flex items-end group duration-200'>
-                                        <div className='text-xl | md:text-[4vw] | xl:text-[2.5vw] font-medium tracking-tight text-gray-400  | dark:text-gray-600 leading-tighter text-balance  lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white'>
-                                            News & Culture
-                                        </div>
-                                        <div className="text-xs lg:text-sm ml-1 transition mb-0.5 | lg:mb-2 text-gray-400  | dark:text-gray-200">144</div>
-                                    </Link>
-                                </li>
-                                <li className='mr-4 | lg:mr-10'>
-                                    <Link href="/work" className='inline-flex items-end group duration-200'>
-                                        <div className='text-xl | md:text-[4vw] | xl:text-[2.5vw] font-medium tracking-tight text-gray-400  | dark:text-gray-600 leading-tighter text-balance  lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white'>
-                                            Archive
-                                        </div>
-                                        <div className="text-xs lg:text-sm ml-1 transition mb-0.5 | lg:mb-2 text-gray-400  | dark:text-gray-200">78</div>
-                                    </Link>
-                                </li>
+                                {/* Other categories from API */}
+                                {categories.map((cat) => (
+                                    <li key={cat} className='mr-4 | lg:mr-10'>
+                                        <button
+                                            className={`inline-flex items-end group duration-200 focus:outline-none cursor-pointer`}
+                                            onClick={() => setSelectedCategory(cat)}
+                                        >
+                                            <div className={`text-xl | md:text-[4vw] | xl:text-[2.5vw] font-medium tracking-tight ${selectedCategory === cat ? 'text-black dark:text-gray-100' : 'text-gray-400 dark:text-gray-600'} leading-tighter text-balance lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white`}>
+                                                {cat}
+                                            </div>
+                                            <div className={`text-xs lg:text-sm ml-1 transition mb-0.5 | lg:mb-2 ${selectedCategory === cat ? 'text-black dark:text-gray-200' : 'text-gray-400 dark:text-gray-200'}`}>{categoryCounts[cat]}</div>
+                                        </button>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                     </div>
                     <div className='flex flex-wrap'>
                         {/* First 8 blog cards (index 0-7) */}
-                        {blogPosts.map((blog, i) => (
+                        {filteredBlogs.slice(0, 8).map((blog, i) => (
                             <div key={i} className='w-full mb-12 | md:mb-16 md:w-1/2 | lg:w-1/3'>
                                 <BlogCard
                                     key={i}
@@ -128,8 +122,8 @@ export default function page() {
                         </div>
 
                         {/* Remaining blog cards (index 8 and up) */}
-                        {blogPosts.slice(9).map((blog, i) => (
-                            <div key={i + 9} className='w-full mb-12 | md:mb-16 md:w-1/2 | lg:w-1/3'>
+                        {filteredBlogs.slice(8).map((blog, i) => (
+                            <div key={i + 8} className='w-full mb-12 | md:mb-16 md:w-1/2 | lg:w-1/3'>
                                 <BlogCard
                                     image={blog.image}
                                     user={blog.user}

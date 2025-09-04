@@ -1,3 +1,4 @@
+
 // "use client"
 // import { useEffect, useRef } from "react"
 // import { gsap } from "gsap"
@@ -10,10 +11,9 @@
 
 //   const isDesktop = () => window.innerWidth >= 1024
 
+//   // Smooth cursor movement
 //   useEffect(() => {
 //     const cursor = cursorRef.current
-
-//     // Smooth movement without lag
 //     const xMove = gsap.quickTo(cursor, "x", { duration: 0.15, ease: "power3.out" })
 //     const yMove = gsap.quickTo(cursor, "y", { duration: 0.15, ease: "power3.out" })
 
@@ -40,55 +40,45 @@
 //     }
 //   }, [])
 
+//   // Use event delegation for hover detection
 //   useEffect(() => {
 //     const cursor = cursorRef.current
-//     const targets = document.querySelectorAll("[data-cursor]")
-//     if (!targets) return
 
-//     const show = (el) => {
+//     const handleMouseOver = (e) => {
 //       if (!isDesktop()) return
-//       gsap.to(cursor, { opacity: 1, scale: 1, duration: 0.2, ease: "power3.out" })
-//       el.style.cursor = "none"
+//       if (e.target.closest("[data-cursor]")) {
+//         gsap.to(cursor, { opacity: 1, scale: 1, duration: 0.2, ease: "power3.out" })
+//         e.target.style.cursor = "none"
+//       }
 //     }
 
-//     const hide = (el) => {
+//     const handleMouseOut = (e) => {
 //       if (!isDesktop()) return
-//       gsap.to(cursor, { opacity: 0, scale: 0.5, duration: 0.2, ease: "power3.out" })
-//       el.style.cursor = ""
+//       if (e.target.closest("[data-cursor]")) {
+//         gsap.to(cursor, { opacity: 0, scale: 0.5, duration: 0.2, ease: "power3.out" })
+//         e.target.style.cursor = ""
+//       }
 //     }
 
-//     const handlers = []
-
-//     targets.forEach((el) => {
-//       const mouseEnter = () => show(el)
-//       const mouseLeave = () => hide(el)
-//       el.addEventListener("mouseenter", mouseEnter)
-//       el.addEventListener("mouseleave", mouseLeave)
-//       handlers.push({ el, mouseEnter, mouseLeave })
-//     })
+//     document.addEventListener("mouseover", handleMouseOver)
+//     document.addEventListener("mouseout", handleMouseOut)
 
 //     return () => {
-//       handlers.forEach(({ el, mouseEnter, mouseLeave }) => {
-//         el.removeEventListener("mouseenter", mouseEnter)
-//         el.removeEventListener("mouseleave", mouseLeave)
-//       })
+//       document.removeEventListener("mouseover", handleMouseOver)
+//       document.removeEventListener("mouseout", handleMouseOut)
 //     }
-//   }, [pathname]) // ✅ re-run when page changes
+//   }, [pathname]) // re-run on route change
 
 //   return (
 //     <div
 //       ref={cursorRef}
 //       className="pointer-events-none fixed -top-12 -left-12 w-24 h-24 rounded-full bg-[#d0ff71] flex items-center justify-center z-[99999] opacity-0 scale-50"
-//       style={{ transform: "translate(0px, 0px)" }} // GSAP uses inline transform
+//       style={{ transform: "translate(0px, 0px)" }}
 //     >
 //       <GoArrowUpRight className="w-10 h-10 text-black" />
 //     </div>
 //   )
 // }
-
-
-
-
 
 "use client"
 import { useEffect, useRef } from "react"
@@ -131,52 +121,41 @@ export default function CustomCursor() {
     }
   }, [])
 
-  // Track hover on data-cursor elements
+  // Reset cursor on route change
+  useEffect(() => {
+    if (!isDesktop()) return
+    const cursor = cursorRef.current
+    gsap.set(cursor, { opacity: 0, scale: 0.5 }) // hide/reset
+  }, [pathname])
+
+  // Hover detection
   useEffect(() => {
     const cursor = cursorRef.current
-    let cleanup = null
 
-    const initCursorTargets = () => {
-      const targets = document.querySelectorAll("[data-cursor]")
-      if (!targets) return
-
-      const show = (el) => {
-        if (!isDesktop()) return
+    const handleMouseOver = (e) => {
+      if (!isDesktop()) return
+      if (e.target.closest("[data-cursor]")) {
         gsap.to(cursor, { opacity: 1, scale: 1, duration: 0.2, ease: "power3.out" })
-        el.style.cursor = "none"
-      }
-
-      const hide = (el) => {
-        if (!isDesktop()) return
-        gsap.to(cursor, { opacity: 0, scale: 0.5, duration: 0.2, ease: "power3.out" })
-        el.style.cursor = ""
-      }
-
-      const handlers = []
-
-      targets.forEach((el) => {
-        const mouseEnter = () => show(el)
-        const mouseLeave = () => hide(el)
-        el.addEventListener("mouseenter", mouseEnter)
-        el.addEventListener("mouseleave", mouseLeave)
-        handlers.push({ el, mouseEnter, mouseLeave })
-      })
-
-      cleanup = () => {
-        handlers.forEach(({ el, mouseEnter, mouseLeave }) => {
-          el.removeEventListener("mouseenter", mouseEnter)
-          el.removeEventListener("mouseleave", mouseLeave)
-        })
+        e.target.style.cursor = "none"
       }
     }
 
-    const raf = requestAnimationFrame(() => initCursorTargets())
+    const handleMouseOut = (e) => {
+      if (!isDesktop()) return
+      if (e.target.closest("[data-cursor]")) {
+        gsap.to(cursor, { opacity: 0, scale: 0.5, duration: 0.2, ease: "power3.out" })
+        e.target.style.cursor = ""
+      }
+    }
+
+    document.addEventListener("mouseover", handleMouseOver)
+    document.addEventListener("mouseout", handleMouseOut)
 
     return () => {
-      cancelAnimationFrame(raf)
-      if (cleanup) cleanup()
+      document.removeEventListener("mouseover", handleMouseOver)
+      document.removeEventListener("mouseout", handleMouseOut)
     }
-  }, [pathname])
+  }, [pathname]) // still re-attach on route change
 
   return (
     <div

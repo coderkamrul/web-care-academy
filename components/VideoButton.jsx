@@ -6,7 +6,7 @@ import { FaPlay } from "react-icons/fa";
 import { IoVolumeMute } from "react-icons/io5";
 import { HiMiniSpeakerWave } from "react-icons/hi2";
 
-function VideoButton() {
+function VideoButton({src}) {
   const [isPlaying, setIsPlaying] = useState(true); // play/pause state
   const [isMuted, setIsMuted] = useState(true); // mute/unmute state
   const videoRef = useRef(null);
@@ -84,7 +84,7 @@ useEffect(() => {
                   loading="lazy"
                 >
                   <source
-                    src="/images/shape-showreel-dasktop.mp4"
+                    src={src}
                     type="video/mp4"
                     className="max-w-[1023px]"
                   />

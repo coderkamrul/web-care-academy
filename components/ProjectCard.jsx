@@ -2,13 +2,13 @@ import Image from 'next/image';
 import Link from 'next/link'
 import React from 'react'
 
-export default function ProjectCard({ title, category, year, video, image, tags, link="/projects/1" }) {
+export default function ProjectCard({ title, category, year, video, image, tags, slug }) {
   return (
     <div className="w-full mb-16 | lg:mb-28">
       <div className="w-full relative">
           <Link
           data-cursor
-            href={link}
+            href={slug ? `/work/${slug}` : '#'}
             className="w-fell relative group flex flex-col items-start transform rotate-001 || js-cursor-trigger-drag"
           >
             <div className="w-full relative overflow-hidden mb-6">

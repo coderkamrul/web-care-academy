@@ -1,120 +1,6 @@
 import React from 'react'
 import ProjectCard from './ProjectCard'
 import Buttons from './Buttons'
-const projects = [
-    {
-        id: 1,
-        video: "/images/project-1.mp4",
-        title: "Refreshing Gary Neville's digital presence",
-        tags: ["Branding", "Website", "SEO"],
-        category: "Gary Neville",
-        year: "2023",
-    },
-    {
-        id: 2,
-        video: "/images/project-1.mp4",
-        title: "Modernizing Miller Metcalfe's website",
-        tags: ["Design", "Development"],
-        category: "Miller Metcalfe",
-        year: "2024",
-    },
-    {
-        id: 3,
-        video: "/images/project-1.mp4",
-        title: "Elevating Shape's digital identity",
-        tags: ["Strategy", "SEO"],
-        category: "Shape Agency",
-        year: "2024",
-    },
-    {
-        id: 4,
-        video: "/images/project-1.mp4",
-        title: "Elevating Shape's digital identity",
-        tags: ["Strategy", "SEO"],
-        category: "Shape Agency",
-        year: "2024",
-    },
-    {
-        id: 5,
-        video: "/images/project-1.mp4",
-        title: "Elevating Shape's digital identity",
-        tags: ["Strategy", "SEO"],
-        category: "Shape Agency",
-        year: "2024",
-    },
-    {
-        id: 6,
-        video: "/images/project-1.mp4",
-        title: "Elevating Shape's digital identity",
-        tags: ["Strategy", "SEO"],
-        category: "Shape Agency",
-        year: "2024",
-    },
-    {
-        id: 7,
-        video: "/images/project-1.mp4",
-        title: "Elevating Shape's digital identity",
-        tags: ["Strategy", "SEO"],
-        category: "Shape Agency",
-        year: "2024",
-    },
-    {
-        id: 8,
-        video: "/images/project-1.mp4",
-        title: "Elevating Shape's digital identity",
-        tags: ["Strategy", "SEO"],
-        category: "Shape Agency",
-        year: "2024",
-    },
-    {
-        id: 9,
-        video: "/images/project-1.mp4",
-        title: "Elevating Shape's digital identity",
-        tags: ["Strategy", "SEO"],
-        category: "Shape Agency",
-        year: "2024",
-    },
-    {
-        id: 10,
-        video: "/images/project-1.mp4",
-        title: "Elevating Shape's digital identity",
-        tags: ["Strategy", "SEO"],
-        category: "Shape Agency",
-        year: "2024",
-    },
-    {
-        id: 11,
-        video: "/images/project-1.mp4",
-        title: "Elevating Shape's digital identity",
-        tags: ["Strategy", "SEO"],
-        category: "Shape Agency",
-        year: "2024",
-    },
-    {
-        id: 12,
-        video: "/images/project-1.mp4",
-        title: "Elevating Shape's digital identity",
-        tags: ["Strategy", "SEO"],
-        category: "Shape Agency",
-        year: "2024",
-    },
-    {
-        id: 13,
-        video: "/images/project-1.mp4",
-        title: "Elevating Shape's digital identity",
-        tags: ["Strategy", "SEO"],
-        category: "Shape Agency",
-        year: "2024",
-    },
-    {
-        id: 14,
-        video: "/images/project-1.mp4",
-        title: "Elevating Shape's digital identity",
-        tags: ["Strategy", "SEO"],
-        category: "Shape Agency",
-        year: "2024",
-    },
-]
 
 const TestimonialSection = () => (
     <div className="w-full mb-20 hidden lg:flex">
@@ -133,7 +19,7 @@ const TestimonialSection = () => (
                 </h2>
                 <div className="flex items-end space-x-2 lg:space-x-3">
                     <div className="w-9 h-9 rounded-md lg:w-12 lg:h-12 lg:rounded-lg overflow-hidden relative bg-[#d0ff71] flex items-center justify-center">
-                        <div className="text-xl mt-px">S</div>
+                        <div className="text-xl mt-px text-black">S</div>
                     </div>
                     <div className="leading-tight tracking-tight">
                         <div className="text-black dark:text-gray-100">Stacy</div>
@@ -159,7 +45,9 @@ const CTASection = () => (
     </div>
 )
 
-export default function MasonryProject() {
+export default function MasonryProject({projects}) {
+
+
     const createMasonryLayout = () => {
         const items = []
         const column1 = []
@@ -199,10 +87,10 @@ export default function MasonryProject() {
                         tags={project.tags}
                         category={project.category}
                         year={project.year}
+                        slug={project.slug}
                     />
                 </div>
             )
-
 
             // Distribute projects between columns
             if (column1.length <= column2.length) {
@@ -216,7 +104,6 @@ export default function MasonryProject() {
     }
 
     const { column1, column2 } = createMasonryLayout()
-
 
     return (
         <div className="flex flex-wrap md:flex-nowrap gap-0">

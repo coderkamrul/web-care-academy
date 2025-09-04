@@ -1,11 +1,40 @@
 'use client'
 import MasonryProject from '@/components/MasonryProject';
 import Link from 'next/link'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Marquee from "@/components/Marquee";
 import BlogCarousel from '@/components/BlogCarousel';
+import axios from 'axios';
 
 export default function page() {
+    const [selectedCategory, setSelectedCategory] = useState('all');
+    const [projects, setProjects] = useState([]);
+    const categories = [
+        { name: 'fashion', value: 'Fashion', count: 8 },
+        { name: 'fitness & sport', value: 'Fitness & Sport', count: 3 },
+        { name: 'education', value: 'Education', count: 4 },
+        { name: 'health', value: 'Health', count: 5 },
+        { name: 'property', value: 'Property', count: 10 },
+        { name: 'corporate', value: 'Corporate', count: 6 },
+        { name: 'food & drink', value: 'Food & Drink', count: 6 },
+        { name: 'agency', value: 'Agency', count: 10 },
+        { name: 'ecommerce', value: 'Ecommerce', count: 18 },
+        { name: 'wordpress', value: 'WordPress', count: 23 },
+        { name: 'shopify', value: 'Shopify', count: 6 },
+        { name: 'archive', value: 'Archive', count: 17 },
+    ];
+
+    useEffect(() => {
+        axios.get('/api/projects')
+            .then(res => setProjects(res.data))
+            .catch(err => console.error(err));
+    }, []);
+
+    // Filter projects by selected category
+    const filteredProjects = selectedCategory === 'all'
+        ? projects
+        : projects.filter(p => p.category === selectedCategory);
+
     return (
         <div>
             <div className='w-full pt-20 pb-28 | lg:pt-36 lg:pb-32'>
@@ -19,114 +48,38 @@ export default function page() {
                                 </div>
                             </h1>
                             <ul className='flex-wrap flex'>
-                                <li className='mr-4 | lg:mr-10'>
-                                    <Link href="/work" className='inline-flex items-end group duration-200'>
-                                        <div className='text-xl | md:text-[4vw] | xl:text-[3vw] font-medium tracking-tight text-black  | dark:text-gray-100 leading-tighter text-balance lg:indent-32 | xl:indent-48 lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white'>
+                                {/* Explore all category - separate and indented */}
+                                <li className='mr-4 | lg:mr-10 lg:indent-32 xl:indent-48'>
+                                    <button
+                                        type="button"
+                                        onClick={() => setSelectedCategory('all')}
+                                        className={`inline-flex items-end group duration-200 bg-transparent border-none outline-none cursor-pointer ${selectedCategory === 'all' ? 'text-black dark:text-gray-100' : ''}`}
+                                    >
+                                        <div className={`text-xl | md:text-[4vw] | xl:text-[3vw] font-medium tracking-tight ${selectedCategory === 'all' ? 'text-black dark:text-gray-100' : 'text-gray-400 dark:text-gray-600'} leading-tighter text-balance lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white`}>
                                             Explore all
                                         </div>
-                                        <div className="text-sm ml-1 transition mb-0.5 | lg:mb-2 text-black | dark:text-gray-200">49</div>
-                                    </Link>
+                                        <div className={`text-sm ml-1 transition mb-0.5 | lg:mb-2 ${selectedCategory === 'all' ? 'text-black dark:text-gray-200' : 'text-gray-400 dark:text-gray-200'}`}>{projects.length}</div>
+                                    </button>
                                 </li>
-                                <li className='mr-4 | lg:mr-10'>
-                                    <Link href="/work" className='inline-flex items-end group duration-200'>
-                                        <div className='text-xl | md:text-[4vw] | xl:text-[3vw] font-medium tracking-tight text-gray-400  | dark:text-gray-600 leading-tighter text-balance  lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white'>
-                                            fashion
-                                        </div>
-                                        <div className="text-xs lg:text-sm ml-1 transition mb-0.5 | lg:mb-2 text-gray-400  | dark:text-gray-200">8</div>
-                                    </Link>
-                                </li>
-                                <li className='mr-4 | lg:mr-10'>
-                                    <Link href="/work" className='inline-flex items-end group duration-200'>
-                                        <div className='text-xl | md:text-[4vw] | xl:text-[3vw] font-medium tracking-tight text-gray-400  | dark:text-gray-600 leading-tighter text-balance  lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white'>
-                                            fitness & sport
-                                        </div>
-                                        <div className="text-xs lg:text-sm ml-1 transition mb-0.5 | lg:mb-2 text-gray-400  | dark:text-gray-200">3</div>
-                                    </Link>
-                                </li>
-                                <li className='mr-4 | lg:mr-10'>
-                                    <Link href="/work" className='inline-flex items-end group duration-200'>
-                                        <div className='text-xl | md:text-[4vw] | xl:text-[3vw] font-medium tracking-tight text-gray-400  | dark:text-gray-600 leading-tighter text-balance  lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white'>
-                                            education
-                                        </div>
-                                        <div className="text-xs lg:text-sm ml-1 transition mb-0.5 | lg:mb-2 text-gray-400  | dark:text-gray-200">4</div>
-                                    </Link>
-                                </li>
-                                <li className='mr-4 | lg:mr-10'>
-                                    <Link href="/work" className='inline-flex items-end group duration-200'>
-                                        <div className='text-xl | md:text-[4vw] | xl:text-[3vw] font-medium tracking-tight text-gray-400  | dark:text-gray-600 leading-tighter text-balance  lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white'>
-                                            health
-                                        </div>
-                                        <div className="text-xs lg:text-sm ml-1 transition mb-0.5 | lg:mb-2 text-gray-400  | dark:text-gray-200">5</div>
-                                    </Link>
-                                </li>
-                                <li className='mr-4 | lg:mr-10'>
-                                    <Link href="/work" className='inline-flex items-end group duration-200'>
-                                        <div className='text-xl | md:text-[4vw] | xl:text-[3vw] font-medium tracking-tight text-gray-400  | dark:text-gray-600 leading-tighter text-balance  lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white'>
-                                            property
-                                        </div>
-                                        <div className="text-xs lg:text-sm ml-1 transition mb-0.5 | lg:mb-2 text-gray-400  | dark:text-gray-200">10</div>
-                                    </Link>
-                                </li>
-                                <li className='mr-4 | lg:mr-10'>
-                                    <Link href="/work" className='inline-flex items-end group duration-200'>
-                                        <div className='text-xl | md:text-[4vw] | xl:text-[3vw] font-medium tracking-tight text-gray-400  | dark:text-gray-600 leading-tighter text-balance  lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white'>
-                                            corporate
-                                        </div>
-                                        <div className="text-xs lg:text-sm ml-1 transition mb-0.5 | lg:mb-2 text-gray-400  | dark:text-gray-200">6</div>
-                                    </Link>
-                                </li>
-                                <li className='mr-4 | lg:mr-10'>
-                                    <Link href="/work" className='inline-flex items-end group duration-200'>
-                                        <div className='text-xl | md:text-[4vw] | xl:text-[3vw] font-medium tracking-tight text-gray-400  | dark:text-gray-600 leading-tighter text-balance  lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white'>
-                                            food & drink
-                                        </div>
-                                        <div className="text-xs lg:text-sm ml-1 transition mb-0.5 | lg:mb-2 text-gray-400  | dark:text-gray-200">6</div>
-                                    </Link>
-                                </li>
-                                <li className='mr-4 | lg:mr-10'>
-                                    <Link href="/work" className='inline-flex items-end group duration-200'>
-                                        <div className='text-xl | md:text-[4vw] | xl:text-[3vw] font-medium tracking-tight text-gray-400  | dark:text-gray-600 leading-tighter text-balance  lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white'>
-                                            agency
-                                        </div>
-                                        <div className="text-xs lg:text-sm ml-1 transition mb-0.5 | lg:mb-2 text-gray-400  | dark:text-gray-200">10</div>
-                                    </Link>
-                                </li>
-                                <li className='mr-4 | lg:mr-10'>
-                                    <Link href="/work" className='inline-flex items-end group duration-200'>
-                                        <div className='text-xl | md:text-[4vw] | xl:text-[3vw] font-medium tracking-tight text-gray-400  | dark:text-gray-600 leading-tighter text-balance  lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white'>
-                                            ecommerce
-                                        </div>
-                                        <div className="text-xs lg:text-sm ml-1 transition mb-0.5 | lg:mb-2 text-gray-400  | dark:text-gray-200">18</div>
-                                    </Link>
-                                </li>
-                                <li className='mr-4 | lg:mr-10'>
-                                    <Link href="/work" className='inline-flex items-end group duration-200'>
-                                        <div className='text-xl | md:text-[4vw] | xl:text-[3vw] font-medium tracking-tight text-gray-400  | dark:text-gray-600 leading-tighter text-balance  lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white'>
-                                            wordpress
-                                        </div>
-                                        <div className="text-xs lg:text-sm ml-1 transition mb-0.5 | lg:mb-2 text-gray-400  | dark:text-gray-200">23</div>
-                                    </Link>
-                                </li>
-                                <li className='mr-4 | lg:mr-10'>
-                                    <Link href="/work" className='inline-flex items-end group duration-200'>
-                                        <div className='text-xl | md:text-[4vw] | xl:text-[3vw] font-medium tracking-tight text-gray-400  | dark:text-gray-600 leading-tighter text-balance  lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white'>
-                                            shopify
-                                        </div>
-                                        <div className="text-xs lg:text-sm ml-1 transition mb-0.5 | lg:mb-2 text-gray-400  | dark:text-gray-200">6</div>
-                                    </Link>
-                                </li>
-                                <li className='mr-4 | lg:mr-10'>
-                                    <Link href="/work" className='inline-flex items-end group duration-200'>
-                                        <div className='text-xl | md:text-[4vw] | xl:text-[3vw] font-medium tracking-tight text-gray-400  | dark:text-gray-600 leading-tighter text-balance  lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white'>
-                                            archive
-                                        </div>
-                                        <div className="text-xs lg:text-sm ml-1 transition mb-0.5 | lg:mb-2 text-gray-400  | dark:text-gray-200">17</div>
-                                    </Link>
-                                </li>
+                                {/* Other categories */}
+                                {categories.map((cat, idx) => (
+                                    <li key={cat.value} className='mr-4 | lg:mr-10'>
+                                        <button
+                                            type="button"
+                                            onClick={() => setSelectedCategory(cat.value)}
+                                            className={`inline-flex items-end group duration-200 bg-transparent border-none outline-none cursor-pointer ${selectedCategory === cat.value ? 'text-black dark:text-gray-100' : ''}`}
+                                        >
+                                            <div className={`text-xl | md:text-[4vw] | xl:text-[3vw] font-medium tracking-tight ${selectedCategory === cat.value ? 'text-black dark:text-gray-100' : 'text-gray-400 dark:text-gray-600'} leading-tighter text-balance lowercase transition | xl:group-hover:text-black lg:dark:group-hover:text-white`}>
+                                                {cat.name}
+                                            </div>
+                                            <div className={`text-xs lg:text-sm ml-1 transition mb-0.5 | lg:mb-2 ${selectedCategory === cat.value ? 'text-black dark:text-gray-200' : 'text-gray-400 dark:text-gray-200'}`}>{projects.filter(p => p.category === cat.value).length}</div>
+                                        </button>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                     </div>
-                    <MasonryProject />
+                    <MasonryProject category={selectedCategory} projects={filteredProjects} />
                 </div>
             </div>
             {/* Marquee  */}
@@ -140,7 +93,7 @@ export default function page() {
                     </div>
                 </div>
             </section>
-            <BlogCarousel/>
+            <BlogCarousel />
         </div>
     )
 }

@@ -2,9 +2,17 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-export default function Buttons({ bg , text,Texticon, color, link , icon, rotateIcon, onClick}  ) {
+export default function Buttons({ bg, text, Texticon, color, link, icon, rotateIcon, onClick }) {
 
-  
+
+  // Check if the link is external
+  const isExternal = link && (
+    link.startsWith("http://") ||
+    link.startsWith("https://") ||
+    link.startsWith("www.") ||
+    /\.(com|app|net|org|io|dev)$/i.test(link)
+  );
+
   return (
     <div className="">
       <div className="relative group inline-flex items-center">
@@ -44,59 +52,90 @@ export default function Buttons({ bg , text,Texticon, color, link , icon, rotate
         {/* Button */}
         {onClick ? (
           <button
-          onClick={onClick}
-          style={{ filter: "url(#buttonFilter)" }}
-          className="inline-flex relative outline-none focus:outline-none cursor-pointer"
-        >
-          {/* Main Pill */}
-          <div
-            className={`w-auto inline-flex items-center justify-center relative leading-tight overflow-hidden rounded-full ${color} py-2 px-5 ${bg} `}
+            onClick={onClick}
+            style={{ filter: "url(#buttonFilter)" }}
+            className="inline-flex relative outline-none focus:outline-none cursor-pointer"
           >
-            <span className="relative text-sm tracking-tight">
-              {text || "Start a project"} {Texticon ? Texticon : null}
-            </span>
-          </div>
+            {/* Main Pill */}
+            <div
+              className={`w-auto inline-flex items-center justify-center relative leading-tight overflow-hidden rounded-full ${color} py-2 px-5 ${bg} `}
+            >
+              <span className="relative text-sm tracking-tight">
+                {text || "Start a project"} {Texticon ? Texticon : null}
+              </span>
+            </div>
 
-          {/* Circle with Icon */}
-          <div
-            className={`${bg} flex-shrink-0 overflow-hidden flex items-center justify-center -ml-1 rounded-full transform transition-transform duration-300 ease-out w-9 h-9 group-hover:translate-x-3 group-hover:${rotateIcon || "rotate-45"}`}
-            
-          >
-          {icon ?
-          icon :
+            {/* Circle with Icon */}
+            <div
+              className={`${bg} flex-shrink-0 overflow-hidden flex items-center justify-center -ml-1 rounded-full transform transition-transform duration-300 ease-out w-9 h-9 group-hover:translate-x-3 group-hover:${rotateIcon || "rotate-45"}`}
 
-            <ArrowUpRight className={`w-4 h-4 ${color} transition-transform duration-300 ease-out`}/>
-          }
-          </div>
-        </button>
-        ):(
-        <Link
-          href={link || "#"}
-          style={{ filter: "url(#buttonFilter)" }}
-          className="inline-flex relative outline-none focus:outline-none"
-        >
-          {/* Main Pill */}
-          <div
-            className={`w-auto inline-flex items-center justify-center relative leading-tight overflow-hidden rounded-full ${color} py-2 px-5 ${bg} `}
-          >
-            <span className="relative text-sm tracking-tight flex gap-2 items-center">
-              {text || "Start a project"} {Texticon ? Texticon : null}
-            </span>
-          </div>
+            >
+              {icon ?
+                icon :
 
-          {/* Circle with Icon */}
-          <div
-            className={`${bg} flex-shrink-0 overflow-hidden flex items-center justify-center -ml-1 rounded-full transform transition-transform duration-300 ease-out w-9 h-9 group-hover:translate-x-3 group-hover:${rotateIcon || "rotate-45"}`}
-            
-          >
-          {icon ?
-          icon :
+                <ArrowUpRight className={`w-4 h-4 ${color} transition-transform duration-300 ease-out`} />
+              }
+            </div>
+          </button>
+        ) : isExternal ?
+          (
+            <a
+              href={link.startsWith("www.") ? `https://${link}` : link} // ensure valid URL
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ filter: "url(#buttonFilter)" }}
+              className="inline-flex relative outline-none focus:outline-none"
+            >
+              {/* Main Pill */}
+              <div
+                className={`w-auto inline-flex items-center justify-center relative leading-tight overflow-hidden rounded-full ${color} py-2 px-5 ${bg} `}
+              >
+                <span className="relative text-sm tracking-tight flex gap-2 items-center">
+                  {text || "Start a project"} {Texticon ? Texticon : null}
+                </span>
+              </div>
 
-            <ArrowUpRight className={`w-4 h-4 ${color} transition-transform duration-300 ease-out`}/>
-          }
-          </div>
-        </Link>
-        )}
+              {/* Circle with Icon */}
+              <div
+                className={`${bg} flex-shrink-0 overflow-hidden flex items-center justify-center -ml-1 rounded-full transform transition-transform duration-300 ease-out w-9 h-9 group-hover:translate-x-3 group-hover:${rotateIcon || "rotate-45"}`}
+
+              >
+                {icon ?
+                  icon :
+
+                  <ArrowUpRight className={`w-4 h-4 ${color} transition-transform duration-300 ease-out`} />
+                }
+              </div>
+            </a>
+          )
+          : (
+            <Link
+              href={link || "#"}
+              style={{ filter: "url(#buttonFilter)" }}
+              className="inline-flex relative outline-none focus:outline-none"
+            >
+              {/* Main Pill */}
+              <div
+                className={`w-auto inline-flex items-center justify-center relative leading-tight overflow-hidden rounded-full ${color} py-2 px-5 ${bg} `}
+              >
+                <span className="relative text-sm tracking-tight flex gap-2 items-center">
+                  {text || "Start a project"} {Texticon ? Texticon : null}
+                </span>
+              </div>
+
+              {/* Circle with Icon */}
+              <div
+                className={`${bg} flex-shrink-0 overflow-hidden flex items-center justify-center -ml-1 rounded-full transform transition-transform duration-300 ease-out w-9 h-9 group-hover:translate-x-3 group-hover:${rotateIcon || "rotate-45"}`}
+
+              >
+                {icon ?
+                  icon :
+
+                  <ArrowUpRight className={`w-4 h-4 ${color} transition-transform duration-300 ease-out`} />
+                }
+              </div>
+            </Link>
+          )}
       </div>
     </div>
   );

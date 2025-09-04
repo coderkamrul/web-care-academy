@@ -212,69 +212,69 @@ const Header = () => {
                       <div className="w-3 h-3 bg-white absolute -top-1.5 rounded-[1px] left-1/3 -translate-x-full transform rotate-45 | dark:bg-[#1a1b1e]"></div>
                       <div className="inline-flex flex-col items-start w-7/12 pr-2">
                         <Link
-                          href="/webcare"
+                          href="/services"
                           className="group/link flex flex-col w-full gap-1 rounded-2xl px-4 py-3 hover:bg-gray-50 dark:hover:bg-black dark:text-white transition-all duration-300 ease-in-out"
                         >
                           <div className="flex justify-between items-center">
                             <div className="text-sm">Web Design</div>
                             <ArrowUpRight className="w-4 h-4 text-gray-600 dark:text-white opacity-0 transition-all duration-300 ease-in-out -translate-x-2 translate-y-2 group-hover/link:translate-x-0 group-hover/link:translate-y-0 group-hover/link:opacity-100" />
                           </div>
-                          <div className="text-xs font-light text-gray-400 dark:text-gray-300 transition-colors duration-300 ease-in-out">
+                          <div className="text-xs font-light text-gray-700 dark:text-gray-300 transition-colors duration-300 ease-in-out">
                             Deliver your business to a wider audience
                           </div>
                         </Link>
                         <Link
-                          href="/webcare"
+                          href="/services"
                           className="group/link flex flex-col w-full gap-1 rounded-2xl px-4 py-3 hover:bg-gray-50 dark:hover:bg-black dark:text-white transition-all duration-300 ease-in-out"
                         >
                           <div className="flex justify-between items-center">
-                            <div className="text-sm">Craft CMS</div>
+                            <div className="text-sm">Wordpress</div>
                             <ArrowUpRight className="w-4 h-4 text-gray-600 dark:text-white opacity-0 transition-all duration-300 ease-in-out -translate-x-2 translate-y-2 group-hover/link:translate-x-0 group-hover/link:translate-y-0 group-hover/link:opacity-100" />
                           </div>
-                          <div className="text-xs font-light text-gray-400 dark:text-gray-300 transition-colors duration-300 ease-in-out">
+                          <div className="text-xs font-light text-gray-700 dark:text-gray-300 transition-colors duration-300 ease-in-out">
                             The most reliable way to build a website
                           </div>
                         </Link>
                         <Link
-                          href="/webcare"
+                          href="/services"
                           className="group/link flex flex-col w-full gap-1 rounded-2xl px-4 py-3 hover:bg-gray-50 dark:hover:bg-black dark:text-white transition-all duration-300 ease-in-out"
                         >
                           <div className="flex justify-between items-center">
                             <div className="text-sm">Branding</div>
                             <ArrowUpRight className="w-4 h-4 text-gray-600 dark:text-white opacity-0 transition-all duration-300 ease-in-out -translate-x-2 translate-y-2 group-hover/link:translate-x-0 group-hover/link:translate-y-0 group-hover/link:opacity-100" />
                           </div>
-                          <div className="text-xs font-light text-gray-400 dark:text-gray-300 transition-colors duration-300 ease-in-out">
+                          <div className="text-xs font-light text-gray-700 dark:text-gray-300 transition-colors duration-300 ease-in-out">
                             Creating brands you're proud of
                           </div>
                         </Link>
                         <Link
-                          href="/webcare"
+                          href="/services"
                           className="group/link flex flex-col w-full gap-1 rounded-2xl px-4 py-3 hover:bg-gray-50 dark:hover:bg-black dark:text-white transition-all duration-300 ease-in-out"
                         >
                           <div className="flex justify-between items-center">
                             <div className="text-sm">SEO</div>
                             <ArrowUpRight className="w-4 h-4 text-gray-600 dark:text-white opacity-0 transition-all duration-300 ease-in-out -translate-x-2 translate-y-2 group-hover/link:translate-x-0 group-hover/link:translate-y-0 group-hover/link:opacity-100" />
                           </div>
-                          <div className="text-xs font-light text-gray-400 dark:text-gray-300 transition-colors duration-300 ease-in-out">
+                          <div className="text-xs font-light text-gray-700 dark:text-gray-300 transition-colors duration-300 ease-in-out">
                             Get your brand seen online
                           </div>
                         </Link>
                         <Link
-                          href="/webcare"
+                          href="/services"
                           className="group/link flex flex-col w-full gap-1 rounded-2xl px-4 py-3 hover:bg-gray-50 dark:hover:bg-black dark:text-white transition-all duration-300 ease-in-out"
                         >
                           <div className="flex justify-between items-center">
-                            <div className="text-sm">Shopify</div>
+                            <div className="text-sm">Go High Level</div>
                             <ArrowUpRight className="w-4 h-4 text-gray-600 dark:text-white opacity-0 transition-all duration-300 ease-in-out -translate-x-2 translate-y-2 group-hover/link:translate-x-0 group-hover/link:translate-y-0 group-hover/link:opacity-100" />
                           </div>
-                          <div className="text-xs font-light text-gray-400 dark:text-gray-300 transition-colors duration-300 ease-in-out">
-                            Custom Shopify store in 4 weeks
+                          <div className="text-xs font-light text-gray-700 dark:text-gray-300 transition-colors duration-300 ease-in-out">
+                            Go High Level website and funnel building
                           </div>
                         </Link>
                       </div>
                       <div className="w-5/12 pl-3 inline-flex">
                         <Link
-                          href="/image"
+                          href="/services"
                           className="group/imagebox w-full inline-flex flex-col items-start justify-between bg-gray-50 rounded-2xl p-5 group | dark:bg-black"
                         >
                           <div className="w-full flex flex-wrap">
@@ -286,7 +286,7 @@ const Header = () => {
                                 <ArrowUpRight className="w-4 h-4 text-gray-600 dark:text-white opacity-0 transition-all duration-300 ease-in-out -translate-x-2 translate-y-2 group-hover/imagebox:translate-x-0 group-hover/imagebox:translate-y-0 group-hover/imagebox:opacity-100" />
                               </div>
                             </div>
-                            <div className="w-full text-sm font-light text-gray-400 | 4xl:text-sm mb-5 | dark:text-white">
+                            <div className="w-full text-sm font-light text-gray-700 | 4xl:text-sm mb-5 | dark:text-white">
                               We don’t stop there, check out all the services we
                               offer here at Shape
                             </div>
@@ -338,7 +338,7 @@ const Header = () => {
                             <div className="text-sm">About us</div>
                             <ArrowUpRight className="w-4 h-4 text-gray-600 dark:text-white opacity-0 transition-all duration-300 ease-in-out -translate-x-2 translate-y-2 group-hover/link:translate-x-0 group-hover/link:translate-y-0 group-hover/link:opacity-100" />
                           </div>
-                          <div className="text-xs font-light text-gray-400 dark:text-gray-300 transition-colors duration-300 ease-in-out">
+                          <div className="text-xs font-light text-gray-700 dark:text-gray-300 transition-colors duration-300 ease-in-out">
                             An award winning agency in Manchester
                           </div>
                         </Link>
@@ -350,70 +350,57 @@ const Header = () => {
                             <div className="text-sm">Meet the Team</div>
                             <ArrowUpRight className="w-4 h-4 text-gray-600 dark:text-white opacity-0 transition-all duration-300 ease-in-out -translate-x-2 translate-y-2 group-hover/link:translate-x-0 group-hover/link:translate-y-0 group-hover/link:opacity-100" />
                           </div>
-                          <div className="text-xs font-light text-gray-400 dark:text-gray-300 transition-colors duration-300 ease-in-out">
+                          <div className="text-xs font-light text-gray-700 dark:text-gray-300 transition-colors duration-300 ease-in-out">
                             Putting faces to names
                           </div>
                         </Link>
                         <Link
-                          href="/webcare"
+                          href="/about"
                           className="group/link flex flex-col w-full gap-1 rounded-2xl px-4 py-3 hover:bg-gray-50 dark:hover:bg-black dark:text-white transition-all duration-300 ease-in-out"
                         >
                           <div className="flex justify-between items-center">
-                            <div className="text-sm">Branding</div>
+                            <div className="text-sm">Culture</div>
                             <ArrowUpRight className="w-4 h-4 text-gray-600 dark:text-white opacity-0 transition-all duration-300 ease-in-out -translate-x-2 translate-y-2 group-hover/link:translate-x-0 group-hover/link:translate-y-0 group-hover/link:opacity-100" />
                           </div>
-                          <div className="text-xs font-light text-gray-400 dark:text-gray-300 transition-colors duration-300 ease-in-out">
-                            Creating brands you're proud of
+                          <div className="text-xs font-light text-gray-700 dark:text-gray-300 transition-colors duration-300 ease-in-out">
+                            How we do things around here
                           </div>
                         </Link>
                         <Link
-                          href="/webcare"
+                          href="/about"
                           className="group/link flex flex-col w-full gap-1 rounded-2xl px-4 py-3 hover:bg-gray-50 dark:hover:bg-black dark:text-white transition-all duration-300 ease-in-out"
                         >
                           <div className="flex justify-between items-center">
-                            <div className="text-sm">SEO</div>
+                            <div className="text-sm">Testimonials</div>
                             <ArrowUpRight className="w-4 h-4 text-gray-600 dark:text-white opacity-0 transition-all duration-300 ease-in-out -translate-x-2 translate-y-2 group-hover/link:translate-x-0 group-hover/link:translate-y-0 group-hover/link:opacity-100" />
                           </div>
-                          <div className="text-xs font-light text-gray-400 dark:text-gray-300 transition-colors duration-300 ease-in-out">
-                            Get your brand seen online
-                          </div>
-                        </Link>
-                        <Link
-                          href="/webcare"
-                          className="group/link flex flex-col w-full gap-1 rounded-2xl px-4 py-3 hover:bg-gray-50 dark:hover:bg-black dark:text-white transition-all duration-300 ease-in-out"
-                        >
-                          <div className="flex justify-between items-center">
-                            <div className="text-sm">Shopify</div>
-                            <ArrowUpRight className="w-4 h-4 text-gray-600 dark:text-white opacity-0 transition-all duration-300 ease-in-out -translate-x-2 translate-y-2 group-hover/link:translate-x-0 group-hover/link:translate-y-0 group-hover/link:opacity-100" />
-                          </div>
-                          <div className="text-xs font-light text-gray-400 dark:text-gray-300 transition-colors duration-300 ease-in-out">
-                            Custom Shopify store in 4 weeks
+                          <div className="text-xs font-light text-gray-700 dark:text-gray-300 transition-colors duration-300 ease-in-out">
+                            What our clients says about us
                           </div>
                         </Link>
                       </div>
                       <div className="w-5/12 pl-3 inline-flex">
                         <Link
-                          href="/image"
+                          href="/about"
                           className="group/imagebox w-full inline-flex flex-col items-start justify-between bg-gray-50 rounded-2xl p-5 group | dark:bg-black"
                         >
                           <div className="w-full flex flex-wrap">
                             <div className="w-full flex justify-between items-center mb-2">
                               <div className="text-md leading-tight | dark:text-white">
-                                View all Services
+                                Watch our Showreel
                               </div>
                               <div className="opacity-0 transition transform -translate-x-2 translate-y-2 | xl:group-hover:translate-y-0 xl:group-hover:translate-x-0 xl:group-hover:opacity-100">
                                 <ArrowUpRight className="w-4 h-4 text-gray-600 dark:text-white opacity-0 transition-all duration-300 ease-in-out -translate-x-2 translate-y-2 group-hover/imagebox:translate-x-0 group-hover/imagebox:translate-y-0 group-hover/imagebox:opacity-100" />
                               </div>
                             </div>
-                            <div className="w-full text-sm font-light text-gray-400 | 4xl:text-sm mb-5 | dark:text-white">
-                              We don’t stop there, check out all the services we
-                              offer here at Shape
+                            <div className="w-full text-sm font-light text-gray-700 | 4xl:text-sm mb-5 | dark:text-white">
+                              What a snippet of our work in under a minute? We've got just the things for ya...
                             </div>
                           </div>
                           <div className="w-full relative">
                             <div className="relative overflow-hidden w-full">
                               <Image
-                                src={"/sercives.webp"}
+                                src={"/images/about.png"}
                                 alt="Branding"
                                 width={300}
                                 height={200}

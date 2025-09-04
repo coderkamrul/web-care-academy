@@ -7,15 +7,27 @@ import ProjectCard from "@/components/ProjectCard";
 import { IoMdPlay } from "react-icons/io";
 import Image from "next/image";
 import Link from "next/link";
-import {React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import Marquee from "@/components/Marquee";
 import BlogCarousel from "@/components/BlogCarousel";
 import VideoModal from "@/components/Modal";
+import axios from "axios";
 
 export default function Home() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
-  
+
   const [modalVideoUrl, setModalVideoUrl] = useState(null);
+  const [projects, setProjects] = useState([]);
+
+
+  useEffect(() => {
+    axios.get('/api/projects')
+      .then(res => setProjects(res.data))
+      .catch(err => console.error(err));
+  }, []);
+
+  // Filter projects by Featured
+  const featuredProjects = projects.filter(p => p.featured);
 
   const cards = [
     {
@@ -371,22 +383,32 @@ export default function Home() {
               </div>
               <div className="px-2 | lg:px-3 | xl:px-4 w-full | md:w-8/16 md:mt-20">
                 {/* project cards  */}
-                <ProjectCard
-                  video={"/images/project-1.mp4"}
-                  title={"Refreshing Gary Neville's digital presence"}
-                  tags={["Branding", "Website", "SEO"]}
-                  category={"Gary Neville"}
-                  year={"2023"}
-                />
-                <ProjectCard
-                  image={"/images/project-2.png"}
-                  title={
-                    "A workplace consultancy creating inspiring environments"
-                  }
-                  tags={["design", "develop"]}
-                  category={"Sketch Studios"}
-                  year={"2024"}
-                />
+                {featuredProjects.length === 0 ? (
+                  // Fallback if no featured projects
+                  <ProjectCard
+                    video={"/images/project-1.mp4"}
+                    title={"Refreshing Gary Neville's digital presence"}
+                    tags={["Branding", "Website", "SEO"]}
+                    category={"Gary Neville"}
+                    year={"2023"}
+                    slug={"refreshing-gary-nevilles-digital-presence"}
+                  />
+                ) : (
+                  // Show only 50% of featured projects
+                  featuredProjects
+                    .slice(0, Math.ceil(featuredProjects.length / 2))
+                    .map((project) => (
+                      <ProjectCard
+                        key={project.id}
+                        video={project.video}
+                        title={project.title}
+                        tags={project.tags}
+                        category={project.category}
+                        year={project.year}
+                        slug={project.slug}
+                      />
+                    ))
+                )}
                 <div className="w-full hidden | lg:flex">
                   <div className="w-full justify-center text-center flex mb-10">
                     <div className="flex flex-col items-center justify-center">
@@ -429,20 +451,33 @@ export default function Home() {
                   </div>
                 </div>
                 {/* project cards  */}
-                <ProjectCard
-                  image={"/images/project-2.png"}
-                  title={"Furniture designed to the greatest extent"}
-                  tags={["design", "develop", "build"]}
-                  category={"Nth Degree"}
-                  year={"2024"}
-                />
-                <ProjectCard
-                  image={"/images/project-2.png"}
-                  title={"Redefining a leading global talent group"}
-                  tags={["design", "develop", "build"]}
-                  category={"YMU"}
-                  year={"2024"}
-                />
+                {featuredProjects.length > 0 ? (
+                  // Render the second half of featured projects
+                  featuredProjects
+                    .slice(Math.ceil(featuredProjects.length / 2))
+                    .map((project) => (
+                      <ProjectCard
+                        key={project.id}
+                        video={project.video}
+                        title={project.title}
+                        tags={project.tags}
+                        category={project.category}
+                        year={project.year}
+                        slug={project.slug}
+                      />
+                    ))
+                ) : (
+                  // Fallback if there are no projects
+                  <ProjectCard
+                    image={"/images/project-2.png"}
+                    title={"Redefining a leading global talent group"}
+                    tags={["design", "develop", "build"]}
+                    category={"YMU"}
+                    year={"2024"}
+                    slug={"redefining-a-leading-global-talent-group"}
+                  />
+                )}
+
                 <div className="w-full flex | lg:hidden">
                   <div className="w-full justify-center text-center flex mb-10">
                     <div className="flex flex-col items-center justify-center">
@@ -855,9 +890,9 @@ export default function Home() {
       </section>
 
       {/* blog carousel  */}
-   
 
-      <BlogCarousel/>
+
+      <BlogCarousel />
     </>
   );
 }
