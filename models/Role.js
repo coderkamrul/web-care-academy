@@ -33,6 +33,12 @@ export class Role {
     return await collection.findOne({ name })
   }
 
+  static async findById(id) {
+    const collection = await this.getCollection()
+    const { ObjectId } = require("mongodb")
+    return await collection.findOne({ _id: new ObjectId(id) })
+  }
+
   static async updateById(id, updateData) {
     const collection = await this.getCollection()
     const { ObjectId } = require("mongodb")

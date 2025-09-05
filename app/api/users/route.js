@@ -26,6 +26,7 @@ export async function GET(request) {
       email: user.email,
       phone: user.phone,
       role: user.role,
+      username: user.username,
       isVerified: user.isVerified,
       isProfileComplete: user.isProfileComplete,
       profileImage: user.profileImage,

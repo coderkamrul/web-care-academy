@@ -3,14 +3,21 @@ import { User } from "../../../../models/User"
 
 export async function POST(request) {
   try {
-    const { userId, verificationCode } = await request.json()
+    const { userId, email, verificationCode } = await request.json()
 
-    if (!userId || !verificationCode) {
+    // Check for required fields
+    if (!verificationCode || (!userId && !email)) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
     }
 
-    // Find user
-    const user = await User.findById(userId)
+    // Find user by ID or email
+    let user
+    if (userId) {
+      user = await User.findById(userId)
+    } else if (email) {
+      user = await User.findOne({ email })
+    }
+
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 })
     }
@@ -21,13 +28,14 @@ export async function POST(request) {
     }
 
     // Update user as verified
-    await User.updateById(userId, {
+    await User.updateById(user._id, {
       isVerified: true,
       verificationCode: null,
     })
 
     return NextResponse.json({
       message: "Account verified successfully",
+      userId: user._id, // optional, useful for frontend
     })
   } catch (error) {
     console.error("Verification error:", error)

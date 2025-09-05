@@ -2,36 +2,24 @@
 
 import { useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { useSession } from "next-auth/react"
-import axios from "axios"
 import { Button } from "../../../components/ui/button"
 import { Input } from "../../../components/ui/input"
 import { Label } from "../../../components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../../components/ui/card"
 import { Alert, AlertDescription } from "../../../components/ui/alert"
-import { CheckCircle, Mail, RefreshCw } from "lucide-react"
+import { RefreshCw } from "lucide-react"
+import Link from "next/link"
 
-export default function VerifyPage() {
+export default function VerifyResetPage() {
   const [verificationCode, setVerificationCode] = useState("")
   const [error, setError] = useState("")
-  const [success, setSuccess] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isResending, setIsResending] = useState(false)
   const [resendCooldown, setResendCooldown] = useState(0)
-  const [codeSent, setCodeSent] = useState(false)
 
   const router = useRouter()
   const searchParams = useSearchParams()
-  const { data: session } = useSession()
-  const userId = searchParams.get("userId") || session?.user?.id
-  const method = "email" // Always use email method
   const email = searchParams.get("email")
-
-  useEffect(() => {
-    if (userId && !codeSent) {
-      sendVerificationCode()
-    }
-  }, [userId, codeSent])
 
   useEffect(() => {
     if (resendCooldown > 0) {
@@ -40,41 +28,33 @@ export default function VerifyPage() {
     }
   }, [resendCooldown])
 
-  const sendVerificationCode = async () => {
-    try {
-      const { data } = await axios.post("/api/auth/resend-code", {
-        userId,
-        email,
-        contactMethod: "email",
-      })
-
-      setCodeSent(true)
-      setResendCooldown(60)
-    } catch (err) {
-      console.error("Failed to send verification code:", err)
-      setError(err.response?.data?.error || "Failed to send verification code")
-    }
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError("")
     setIsLoading(true)
 
     try {
-      const { data } = await axios.post("/api/auth/verify", {
-        userId,
-        email,
-        verificationCode,
+      const response = await fetch("/api/auth/verify-reset", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          verificationCode,
+        }),
       })
 
-      setSuccess(true)
-      setTimeout(() => {
-        router.push("/dashboard")
-        router.refresh() // Refresh to update session
-      }, 2000)
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Verification failed")
+      }
+
+      // Redirect to password reset page with verification token
+      router.push(`/auth/reset-password?token=${data.token}&email=${email}`)
     } catch (err) {
-      setError(err.response?.data?.error || "Verification failed")
+      setError(err.message)
     } finally {
       setIsLoading(false)
     }
@@ -85,36 +65,32 @@ export default function VerifyPage() {
     setIsResending(true)
 
     try {
-      await sendVerificationCode()
+      const response = await fetch("/api/auth/forgot-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      })
+
+      if (response.ok) {
+        setResendCooldown(60)
+      } else {
+        setError("Failed to resend code")
+      }
     } catch (err) {
-      setError(err.response?.data?.error || "Failed to resend code")
+      setError("Failed to resend code")
     } finally {
       setIsResending(false)
     }
-  }
-  if (success) {
-    return (
-      <Card className="w-full">
-        <CardHeader className="text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-            <CheckCircle className="h-6 w-6 text-green-600" />
-          </div>
-          <CardTitle className="text-2xl font-bold text-green-600">Account Verified!</CardTitle>
-          <CardDescription>Your account has been successfully verified. Redirecting to dashboard...</CardDescription>
-        </CardHeader>
-      </Card>
-    )
   }
 
   return (
     <Card className="w-full">
       <CardHeader className="text-center">
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-          <Mail className="h-6 w-6 text-primary" />
-        </div>
-        <CardTitle className="text-2xl font-bold">Verify Your Account</CardTitle>
+        <CardTitle className="text-2xl font-bold">Verify Reset Code</CardTitle>
         <CardDescription>
-          We've sent a verification code to your email address. Please enter the code below to continue.
+          Enter the verification code sent to your email to proceed with password reset.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -140,7 +116,7 @@ export default function VerifyPage() {
           )}
 
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? "Verifying..." : "Verify Account"}
+            {isLoading ? "Verifying..." : "Verify Code"}
           </Button>
         </form>
 
@@ -163,6 +139,12 @@ export default function VerifyPage() {
               "Resend Code"
             )}
           </Button>
+        </div>
+
+        <div className="mt-4 text-center">
+          <Link href="/auth/login" className="text-sm text-primary hover:underline">
+            Back to Login
+          </Link>
         </div>
       </CardContent>
     </Card>

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { useSession } from "next-auth/react"
 import { Button } from "../../../components/ui/button"
 import { Input } from "../../../components/ui/input"
+import { Label } from "../../../components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../../components/ui/card"
 import { Badge } from "../../../components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "../../../components/ui/avatar"
@@ -26,7 +27,18 @@ import {
 } from "../../../components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../components/ui/select"
 import { Alert, AlertDescription } from "../../../components/ui/alert"
-import { Search, MoreHorizontal, UserPlus, Edit, Trash2, Shield, CheckCircle, XCircle, Filter } from "lucide-react"
+import {
+  Search,
+  MoreHorizontal,
+  UserPlus,
+  Edit,
+  Trash2,
+  Shield,
+  CheckCircle,
+  XCircle,
+  Filter,
+  Loader2,
+} from "lucide-react"
 import AuthGuard from "../../../components/auth/auth-guard"
 
 export default function UsersPage() {
@@ -39,6 +51,9 @@ export default function UsersPage() {
   const [selectedUser, setSelectedUser] = useState(null)
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
+  const [createUserData, setCreateUserData] = useState({ name: "", email: "", role: "user", teamName: "Your Team" })
+  const [createUserLoading, setCreateUserLoading] = useState(false)
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
 
@@ -117,6 +132,35 @@ export default function UsersPage() {
     }
   }
 
+  const handleCreateUser = async (e) => {
+    e.preventDefault()
+    setError("")
+    setCreateUserLoading(true)
+
+    try {
+      const response = await fetch("/api/admin/create-user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(createUserData),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setSuccess(`User created successfully! Invitation sent to ${createUserData.email}`)
+        setIsCreateDialogOpen(false)
+        setCreateUserData({ name: "", email: "", role: "user", teamName: "Your Team" })
+        fetchUsers() // Refresh users list
+      } else {
+        setError(data.error || "Failed to create user")
+      }
+    } catch (err) {
+      setError("An error occurred while creating user")
+    } finally {
+      setCreateUserLoading(false)
+    }
+  }
+
   const getRoleBadgeColor = (role) => {
     switch (role) {
       case "admin":
@@ -154,7 +198,7 @@ export default function UsersPage() {
             <p className="text-muted-foreground">Manage users, roles, and permissions</p>
           </div>
           {session?.user?.role === "admin" && (
-            <Button>
+            <Button onClick={() => setIsCreateDialogOpen(true)}>
               <UserPlus className="mr-2 h-4 w-4" />
               Add User
             </Button>
@@ -372,6 +416,91 @@ export default function UsersPage() {
                 Delete User
               </Button>
             </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Create User Dialog */}
+        <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Create New User</DialogTitle>
+              <DialogDescription>Create a new user account and send them an invitation email</DialogDescription>
+            </DialogHeader>
+            <form onSubmit={handleCreateUser} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Full Name</Label>
+                <Input
+                  id="name"
+                  value={createUserData.name}
+                  onChange={(e) => setCreateUserData({ ...createUserData, name: e.target.value })}
+                  placeholder="Enter full name"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="email">Email Address</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={createUserData.email}
+                  onChange={(e) => setCreateUserData({ ...createUserData, email: e.target.value })}
+                  placeholder="Enter email address"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="role">Role</Label>
+                <Select
+                  value={createUserData.role}
+                  onValueChange={(value) => setCreateUserData({ ...createUserData, role: value })}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="user">User</SelectItem>
+                    <SelectItem value="manager">Manager</SelectItem>
+                    <SelectItem value="admin">Admin</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="teamName">Team Name</Label>
+                <Input
+                  id="teamName"
+                  value={createUserData.teamName}
+                  onChange={(e) => setCreateUserData({ ...createUserData, teamName: e.target.value })}
+                  placeholder="Enter team name for invitation"
+                />
+              </div>
+
+              <DialogFooter>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setIsCreateDialogOpen(false)}
+                  disabled={createUserLoading}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" disabled={createUserLoading}>
+                  {createUserLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Creating...
+                    </>
+                  ) : (
+                    <>
+                      <UserPlus className="mr-2 h-4 w-4" />
+                      Create & Send Invite
+                    </>
+                  )}
+                </Button>
+              </DialogFooter>
+            </form>
           </DialogContent>
         </Dialog>
       </div>

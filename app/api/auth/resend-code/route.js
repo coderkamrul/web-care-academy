@@ -4,14 +4,21 @@ import { generateVerificationCode, sendVerificationCode } from "../../../../lib/
 
 export async function POST(request) {
   try {
-    const { userId, contactMethod } = await request.json()
+    const { userId, email, contactMethod } = await request.json()
 
-    if (!userId) {
-      return NextResponse.json({ error: "Missing user ID" }, { status: 400 })
+    // Check for at least one identifier
+    if (!userId && !email) {
+      return NextResponse.json({ error: "Missing user identifier" }, { status: 400 })
     }
 
-    // Find user
-    const user = await User.findById(userId)
+    // Find user by ID or email
+    let user
+    if (userId) {
+      user = await User.findById(userId)
+    } else if (email) {
+      user = await User.findOne({ email })
+    }
+
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 })
     }
@@ -24,7 +31,7 @@ export async function POST(request) {
     const verificationCode = await generateVerificationCode()
 
     // Update user with new code
-    await User.updateById(userId, { verificationCode })
+    await User.updateById(user._id, { verificationCode })
 
     // Send verification code
     const contact = contactMethod === "email" ? user.email : user.phone
@@ -32,6 +39,7 @@ export async function POST(request) {
 
     return NextResponse.json({
       message: "Verification code sent successfully",
+      userId: user._id, // Return userId for frontend use
     })
   } catch (error) {
     console.error("Resend code error:", error)

@@ -10,6 +10,7 @@ import ActionCursor from "@/components/ActionCursor";
 import { GoArrowUpRight } from "react-icons/go";
 import AuthSessionProvider from "@/components/auth/session-provider";
 import { Suspense } from "react";
+import { Toaster } from "@/components/ui/sonner";
 
 
 const geistSans = Geist({
@@ -66,6 +67,7 @@ export default function RootLayout({ children }) {
           <CustomCursor />
           <ActionCursor defaultIcon={<GoArrowUpRight className="w-10 h-10 text-black" />} />
           <ContactCTA />
+          <Toaster />
           <Footer />
         </ThemeProvider>
       </body>

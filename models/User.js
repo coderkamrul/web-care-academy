@@ -17,6 +17,11 @@ export class User {
     this.isProfileComplete = data.isProfileComplete || false
     this.createdAt = data.createdAt || new Date()
     this.updatedAt = data.updatedAt || new Date()
+    this._id = data._id
+    this.resetToken = data.resetToken
+    this.resetTokenExpires = data.resetTokenExpires
+    this.inviteToken = data.inviteToken
+    this.inviteTokenExpires = data.inviteTokenExpires
   }
 
   static async getCollection() {
@@ -60,6 +65,17 @@ export class User {
     return await collection.findOne({ _id: new ObjectId(id) })
   }
 
+  static async findOne(filter) {
+    const collection = await this.getCollection()
+    const userData = await collection.findOne(filter)
+    return userData ? new User(userData) : null
+  }
+
+  static async updateOne(filter, update) {
+    const collection = await this.getCollection()
+    return await collection.updateOne(filter, update)
+  }
+
   static async updateById(id, updateData) {
     const collection = await this.getCollection()
     const { ObjectId } = require("mongodb")
@@ -95,4 +111,22 @@ export class User {
     }
     return await this.updateById(id, updateData)
   }
+
+  async save() {
+    const collection = await User.getCollection()
+    this.updatedAt = new Date()
+
+    if (this._id) {
+      // Update existing user
+      const { _id, ...updateData } = this
+      await collection.updateOne({ _id }, { $set: updateData })
+    } else {
+      // Insert new user
+      const result = await collection.insertOne(this)
+      this._id = result.insertedId
+    }
+    return this
+  }
 }
+
+export default User

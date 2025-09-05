@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Buttons from './Buttons';
 import Link from 'next/link';
 import axios from 'axios';
+import { toast } from "sonner"
 
 export default function ContactForm() {
     const [formData, setFormData] = useState({
@@ -37,13 +38,13 @@ export default function ContactForm() {
         try {
             const res = await axios.post("/api/contact", formData);
             if (res.status === 200) {
-                alert("Form submitted successfully ✅");
+                toast("Form submitted successfully ✅");
                 setFormData({ name: "", email: "", phone: "", howDidYouHearAboutUs: "", message: "" });
                 setErrors({});
             }
         } catch (err) {
             console.error(err);
-            alert("Something went wrong ❌");
+            toast("Something went wrong ❌");
         }
     };
 
