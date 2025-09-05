@@ -1,7 +1,7 @@
 "use client";
 import Buttons from '@/components/Buttons';
 import ContactForm from '@/components/ContactForm';
-import { ArrowDownRight, ArrowUpRight, Contact } from 'lucide-react';
+import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import  React, {useRef, useState } from 'react'

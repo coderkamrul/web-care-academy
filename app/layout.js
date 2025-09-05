@@ -8,6 +8,8 @@ import Footer from "@/components/Footer";
 import ContactCTA from "@/components/ContactCTA";
 import ActionCursor from "@/components/ActionCursor";
 import { GoArrowUpRight } from "react-icons/go";
+import AuthSessionProvider from "@/components/auth/session-provider";
+import { Suspense } from "react";
 
 
 const geistSans = Geist({
@@ -57,12 +59,14 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} ${Oldschool.className} antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <Header />
-          {children}
+          <Header />
+          <Suspense fallback={<div>Loading...</div>}>
+            <AuthSessionProvider>{children}</AuthSessionProvider>
+          </Suspense>
           <CustomCursor />
           <ActionCursor defaultIcon={<GoArrowUpRight className="w-10 h-10 text-black" />} />
-          <ContactCTA/>
-          <Footer/>
+          <ContactCTA />
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

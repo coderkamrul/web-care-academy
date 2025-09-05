@@ -391,6 +391,8 @@ export default function page({ params }) {
 
             <ProjectSlider/>
 
+            
+
 
             {project?.livePreview &&
                 <div className='fixed bottom-0 left-0 z-50 w-full flex justify-center mb-6 transition-opacity opacity-100 pointer-events-auto'>
