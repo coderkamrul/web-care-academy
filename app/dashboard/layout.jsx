@@ -15,7 +15,7 @@ import {
 } from "../../components/ui/dropdown-menu"
 import { Badge } from "../../components/ui/badge"
 import { Alert, AlertDescription } from "../../components/ui/alert"
-import { LayoutDashboard, Users, Settings, Shield, LogOut, Menu, X, User, AlertCircle, PhoneCallIcon } from "lucide-react"
+import { LayoutDashboard, Users, Settings, Shield, LogOut, Menu, X, User, AlertCircle, PhoneCallIcon, FolderKanban } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "../../lib/utils"
@@ -23,6 +23,7 @@ import { cn } from "../../lib/utils"
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard, roles: ["user", "manager", "admin"] },
   { name: "Users", href: "/dashboard/users", icon: Users, roles: ["manager", "admin"] },
+  { name: "Projects", href: "/dashboard/projects", icon: FolderKanban, roles: ["manager", "admin"] },
   { name: "Contacts", href: "/dashboard/contacts", icon: PhoneCallIcon, roles: ["manager", "admin"] },
   { name: "Roles", href: "/dashboard/roles", icon: Shield, roles: ["admin"] },
   { name: "Profile", href: "/dashboard/profile", icon: User, roles: ["user", "manager", "admin"] },
